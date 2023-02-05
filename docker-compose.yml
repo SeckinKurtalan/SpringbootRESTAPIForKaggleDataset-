@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  docker-mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=mysqldb
+      - MYSQL_USER=sa
+      - MYSQL_PASSWORD=1234
+    ports:
+      - 9090:8080
+
+  app:
+    image: springbootmysql:latest
+    ports:
+      - 9090:8080
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/expensetracker/database?autoReconnect=true&useSSL=false
+    depends_on:
+      - docker-mysql
